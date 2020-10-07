@@ -1,4 +1,5 @@
 const express = require('express');
+// eslint-disable-next-line import/no-useless-path-segments
 const tourController = require('./../controllers/tourController');
 
 const router = express.Router();
