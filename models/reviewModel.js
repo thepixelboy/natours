@@ -21,11 +21,10 @@ const reviewSchema = new mongoose.Schema(
       ref: 'Tour',
       required: [true, 'Review must belong to a tour.'],
     },
-
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      required: [true, 'Review must belong to a user.'],
+      required: [true, 'Review must belong to a user'],
     },
   },
   {
@@ -46,7 +45,6 @@ reviewSchema.pre(/^find/, function (next) {
     path: 'user',
     select: 'name photo',
   });
-
   next();
 });
 
