@@ -62,17 +62,35 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
       },
     },
   ]);
-  console.log(stats);
+  // console.log(stats);
 
-  await Tour.findByIdAndUpdate(tourId, {
-    ratingsQuantity: stats[0].nRating,
-    ratingsAverage: stats[0].avgRating,
-  });
+  if (stats.length > 0) {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: stats[0].nRating,
+      ratingsAverage: stats[0].avgRating,
+    });
+  } else {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: 0,
+      ratingsAverage: 4.5,
+    });
+  }
 };
 
 reviewSchema.post('save', function () {
   // this points to current review
   this.constructor.calcAverageRatings(this.tour);
+});
+
+reviewSchema.pre(/ˆfindOneAnd/, async function (next) {
+  this.r = await this.findOne();
+  // console.log(this.r);
+  next();
+});
+
+reviewSchema.post(/ˆfindOneAnd/, async function () {
+  // await this.findOne(); Does NOT work here. Query was already executed
+  await this.r.constructor.calcAverageRatings(this.r.tour);
 });
 
 const Review = mongoose.model('Review', reviewSchema);
