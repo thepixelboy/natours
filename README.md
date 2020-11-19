@@ -6,7 +6,8 @@ You can [download the course slides](https://github.com/jonasschmedtmann/complet
 
 ## Note:
 You will need one additional file which is not included on this repo for security reasons. This file is called config.env and must be placed in the root folder of the project, filled with actual values:
-`NODE_ENV = 'development'
+```
+NODE_ENV = 'development'
 PORT = 3000
 DATABASE = 
 DATABASE_PASSWORD = 
@@ -18,4 +19,5 @@ JWT_COOKIE_EXPIRES_IN = 90
 EMAIL_USERNAME = 
 EMAIL_PASSWORD = 
 EMAIL_HOST = 
-EMAIL_PORT = `
+EMAIL_PORT = 
+```
