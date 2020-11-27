@@ -32,7 +32,6 @@ export const logout = async () => {
     });
     if (res.data.status === 'success') location.reload();
   } catch (err) {
-    console.log(err.response);
     showAlert('error', 'Error loggin out! Try again.');
   }
 };
