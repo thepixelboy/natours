@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer');
 const pug = require('pug');
-const htmlTotext = require('html-to-text');
+const htmlToText = require('html-to-text');
 
 // new Email(user, url).sendWelcome();
 module.exports = class Email {
   constructor(user, url) {
-    this.to = user.emal;
+    this.to = user.email;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
     this.from = `Jonas Schmedtmann <${process.env.EMAIL_FROM}>`;
@@ -30,10 +30,11 @@ module.exports = class Email {
   // Send the actual email
   async send(template, subject) {
     // 1) Render HTML based on a pug template
-    const html = pug.renderFile(
-      `${__dirname}/../views/emails/${template}.pug`,
-      { firstName: this.firstName, url: this.url, subject }
-    );
+    const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+      firstName: this.firstName,
+      url: this.url,
+      subject,
+    });
 
     // Define the email options
     const mailOptions = {
@@ -41,7 +42,7 @@ module.exports = class Email {
       to: this.to,
       subject,
       html,
-      text: htmlTotext.fromString(html),
+      text: htmlToText.fromString(html),
       tls: { rejectUnauthorized: false },
     };
 
